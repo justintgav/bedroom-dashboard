@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+      <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+
+
+      <link rel="stylesheet" href="css/flipclock.css">
+
+      <!--Let browser know website is optimized for mobile-->
+      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    </head>
+<body bgcolor="#000000" text="white">
+
+<!-- Forecast -->
+      <div class="row">
+        <div class="col s6 ">
+          <div class="card grey lighten-1">
+            <div class="card-content white-text">
+               <iframe id="forecast_embed" frameborder="0" height="245" width="100%" src="//forecast.io/embed/#lat=39.60206&lon=-74.84267&name=Folsom&color=#000000&units=us"></iframe>
+            </div>
+          </div>
+          
+<!--Google Calendar-->          
+         <div class="card grey lighten-1">
+            <div class="card-content white-text">
+               <iframe src="https://calendar.google.com/calendar/embed?showTitle=0&amp;showPrint=0&amp;showCalendars=0&amp;showTz=0&amp;mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23bdbdbd&amp;src=udie91%40gmail.com&amp;color=%232952A3&amp;src=eq4qc3sc29kel2ej07109vlcdg%40group.calendar.google.com&amp;color=%230F4B38&amp;src=%23contacts%40group.v.calendar.google.com&amp;color=%23875509&amp;src=j65o29jafeq88hv408s05kapms%40group.calendar.google.com&amp;color=%23711616&amp;src=en.usa%23holiday%40group.v.calendar.google.com&amp;color=%2323164E&amp;src=pt7b1denugs40eso6v9s70tmdo%40group.calendar.google.com&amp;color=%236B3304&amp;ctz=America%2FNew_York" style="border-width:0" width="575" height="600" frameborder="0" scrolling="no"></iframe>
+            </div>
+          </div>
+          
+        </div>
+
+<!--Radar-->
+        <div class="col s6 ">
+          <div class="card grey lighten-1">
+            <div class="card-content white-text">
+<img id="radarIMG" class="responsive-img" src="https://radar.weather.gov/ridge/lite/N0R/DIX_0.png">
+            </div>
+          </div>
+        </div>
+          
+<!--Clock-->
+         <div class="col s3 ">
+          <div class="card grey lighten-1">
+            <div class="card-content black-text">
+               <span class="card-title">Standard Clock</span>
+               <h4 id="main-clock" style="font-family: monospace;"></h4>
+            </div>
+          </div>
+         </div>
+         
+         <div class="col s3 ">
+          <div class="card grey lighten-1">
+            <div class="card-content black-text">
+               <span class="card-title">Unix Time</span>
+               <h4 id="unix-clock" style="font-family: monospace;"></h5>
+            </div>
+          </div>
+          
+        </div>
+        
+<!--Uptime
+        <div class="col s6 ">
+          <div class="card grey lighten-1">
+            <div class="card-content black-text">
+               <h6>Server Status</h6>
+               <div id="server-status" class="valign-wrapper">
+                  <img id="srv-up" src="img/ic_check_circle_black_24px.svg" style="display:none">
+                  <img id="srv-down" src="img/ic_remove_circle_black_24px.svg" style="display:none">
+                  Andre
+                  <br>
+                  <img id="torrent-srv-up" src="img/ic_check_circle_black_24px.svg" style="display:none">
+                  <img id="torrent-srv-down" src="img/ic_remove_circle_black_24px.svg" style="display:none">
+                  TorrentPi
+               </div>
+            </div>
+          </div>
+        </div>
+-->
+      </div>
+      
+      
+
+
+
+
+
+
+
+<script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="js/materialize.min.js"></script>
+<!--<script type="text/javascript" src="js/ical.min.js"></script>-->
+<!--<script src="js/ping.js"></script>-->
+<!--<script src="js/flipclock.min.js"></script>-->
+
+
+
+<script type="text/javascript" >
+   $( document ).ready(function() {
+    startTime();
+    
+    $(function() {
+   var intervalMS = 300000; // 5min
+   setInterval(function() {
+      //Radar
+      $("#radarIMG").prop("src", "https://radar.weather.gov/ridge/lite/N0R/DIX_0.png?" + new Date().valueOf());
+      
+
+   }, intervalMS);
+   });
+});
+
+
+
+
+function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    //var s = today.getSeconds();
+    m = checkTime(m);
+    //s = checkTime(s);
+    document.getElementById('main-clock').innerHTML =
+    h + ":" + m; //+ ":" + s;
+    
+    //unix time
+    document.getElementById('unix-clock').innerHTML =
+      Math.round((new Date()).getTime() / 1000);
+    
+    var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+    if (i < 10) {i = "0" + i};  // add zero in front of numbers < 10
+    return i;
+}
+
+/*
+function srvUpdate() {
+   
+   ping('10.0.0.12').then(function(delta) {
+       $("#srv-up").show();
+       $("#srv-down").hide();
+   }).catch(function(err) {
+       $("#srv-up").hide();
+       $("#srv-down").show();
+   });
+   
+   ping('10.0.0.6').then(function(delta) {
+       $("#torrent-srv-up").show();
+       $("#torrent-srv-down").hide();
+   }).catch(function(err) {
+       $("#torrent-srv-up").hide();
+       $("#torrent-srv-down").show();
+   });
+   
+   
+}
+*/
+</script>
+
+
+</body>
+</html>
