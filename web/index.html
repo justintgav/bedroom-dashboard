@@ -33,10 +33,19 @@
         </div>
 
 <!--Radar-->
+<!--https://radar.weather.gov/Conus/Loop/northeast_loop.gif-->
         <div class="col s6 ">
           <div class="card grey lighten-1">
+            <div class="card-tabs">
+               <ul class="tabs tabs-fixed-width tabs-transparent grey">
+                 
+                 <li class="tab"><a class="active" href="#local-radar">Local</a></li>
+                 <li class="tab"><a href="#regional-radar">Regional</a></li>
+               </ul>
+            </div>
             <div class="card-content white-text">
-<img id="radarIMG" class="responsive-img" src="https://radar.weather.gov/ridge/lite/N0R/DIX_0.png">
+               <img id="local-radar" class="responsive-img" src="https://radar.weather.gov/ridge/lite/N0R/DIX_loop.gif">
+               <img id="regional-radar" class="responsive-img" src="https://radar.weather.gov/Conus/Loop/northeast_loop.gif" style="display: none;" >
             </div>
           </div>
         </div>
@@ -105,7 +114,8 @@
    var intervalMS = 300000; // 5min
    setInterval(function() {
       //Radar
-      $("#radarIMG").prop("src", "https://radar.weather.gov/ridge/lite/N0R/DIX_0.png?" + new Date().valueOf());
+      $("#local-radar").prop("src", "https://radar.weather.gov/ridge/lite/N0R/DIX_loop.gif?" + new Date().valueOf());
+      $("#regional-radar").prop("src", "https://radar.weather.gov/Conus/Loop/northeast_loop.gif?" + new Date().valueOf());
       
 
    }, intervalMS);
@@ -117,7 +127,7 @@
 
 function startTime() {
     var today = new Date();
-    var h = today.getHours();
+    var h = today.getHours() % 12;
     var m = today.getMinutes();
     //var s = today.getSeconds();
     m = checkTime(m);
